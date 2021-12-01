@@ -73,7 +73,7 @@ function BottomTabNavigator() {
                 name="Coming_Soon"
                 component={TabTwoScreen}
                 options={{
-                    title: 'Coming Soon',
+                    // title: 'Coming Soon',
                     tabBarIcon: ({color}) => <MaterialIcons name='video-library' size={24}/>,
                 }}
             />
@@ -81,7 +81,7 @@ function BottomTabNavigator() {
                 name="Search"
                 component={TabTwoScreen}
                 options={{
-                    title: 'Search',
+                    // title: 'Search',
                     tabBarIcon: ({color}) => <Ionicons name='search' size={24}/>,
                 }}
             />
@@ -89,10 +89,13 @@ function BottomTabNavigator() {
                 name="Downloads"
                 component={TabTwoScreen}
                 options={{
-                    title: 'Coming Soon',
+                    // title: 'Coming Soon',
                     tabBarIcon: ({color}) => <AntDesign name='download' size={24}/>,
                 }}
             />
         </BottomTab.Navigator>
     );
 }
+
+
+
