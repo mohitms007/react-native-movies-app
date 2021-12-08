@@ -1,5 +1,6 @@
 import { AntDesign, Entypo, Feather, Ionicons, MaterialIcons } from "@expo/vector-icons"
-import React from "react"
+import { Picker } from "@react-native-picker/picker"
+import React, { useState } from "react"
 import { Text, View, Image, Pressable, FlatList } from "react-native"
 import EpisodeItem from "../../components/EpisodeItem"
 import styles from "./styles"
@@ -30,12 +31,13 @@ const movie = {
 
 export default function DetailScreen() {
 
+  const [selectedSeason, setSelectedSeason] = useState('s1')
   return (
     <View>
       <Image style={styles.image} source={{ uri: 'http://image.tmdb.org/t/p/w500' + movie.poster_path }} />
       <FlatList
         data={movies}
-        style={{marginBottom: 250}}
+        style={{ marginBottom: 250 }}
         renderItem={({ item }) => <EpisodeItem episode={item} />}
         ListHeaderComponent={(
           <View>
@@ -83,6 +85,18 @@ export default function DetailScreen() {
                 <Text style={styles.shareText}> Share </Text>
               </View>
             </View>
+
+            <Picker
+              selectedValue={selectedSeason}
+              dropdownIconColor="white"
+              onValueChange={(itemValue, itemIndex) => { setSelectedSeason(itemValue) }}
+              style={styles.pickerStyle}
+            >
+              {seasons.map((item) => { 
+                const {label, value} = item
+                return  <Picker.Item key={value} label={label} value={value} />
+              })}
+            </Picker>
           </View>
         )}
       />
@@ -93,14 +107,14 @@ export default function DetailScreen() {
 }
 
 
-
+const seasons = [{ label: 'Season 1', value: 's1' }, { label: 'Season 2', value: 's2' }, { label: 'Season 3', value: 's3' }, { label: 'Season 4', value: 's4' }]
 
 
 const movies = [
   {
     id: 1,
     title: 'The upbringingh',
-    poster: 'https://lh3.googleusercontent.com/proxy/gft5ACBD9PcEYPzQU2Bw7WCNkQbqyc3qQH3xKwTnoBQDAbnLgdbnU7e9RQ40onaMQCYUKRUjJ5L4dqWiawIrpjHSQkpKN4Rrh1SLXDQESHsDDiOs4ADrQNPyRZt5ECt448ot7AfBOcRV--SZncsz6cFZcpG6n4xF7GAiKFYkhs0AsVMAedP880IueoRrRBEii9BcnEAlfpEnKh6oZc71bK8aBZUhqEKhsqyFLM1NdKW6fgPLIxeGc10',
+    poster: 'https://m.media-amazon.com/images/M/MV5BNmVmMmM5ZmItZDg0OC00NTFiLWIxNzctZjNmYTY5OTU3ZWU3XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_.jpg',
     duration: '25:00',
     plot: 'This is a great episode where murder is held and everybody dies.asnfjkdnafkjdnjfndkfjdanjfkadsnkjfndsakjnc dsnfjdsanfjkdasnkfnsdak n naskjfnjkasdnf jknf a',
     video: 'string'

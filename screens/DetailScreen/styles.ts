@@ -108,6 +108,13 @@ const styles = StyleSheet.create({
   rateText: {
     color: 'lightgrey',
     fontSize: 12
+  },
+
+  pickerStyle: {
+    color: 'white',
+    width: 200,
+    marginLeft: 15,
+    backgroundColor: 'black' 
   }
 
 

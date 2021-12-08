@@ -15,7 +15,7 @@ const episode = {
 
 export default function EpisodeItem() {
   return (
-    <View style={{marginVertical: 7}}>
+    <View style={{margin: 10}}>
       <View style={styles.row}>
         <Image style={styles.image} source={{uri: episode.poster}} />
         
