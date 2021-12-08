@@ -31,6 +31,12 @@ export type RootTabParamList = {
   Search: undefined
 };
 
+export type HomeParamList = {
+  HomeScreen: undefined, 
+  DetailScreen: undefined
+}
+
+
 export type RootTabScreenProps<Screen extends keyof RootTabParamList> = CompositeScreenProps<
   BottomTabScreenProps<RootTabParamList, Screen>,
   NativeStackScreenProps<RootStackParamList>

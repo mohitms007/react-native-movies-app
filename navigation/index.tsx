@@ -14,10 +14,11 @@ import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import ModalScreen from '../screens/ModalScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
-import TabOneScreen from '../screens/TabOneScreen';
+import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
-import {RootStackParamList, RootTabParamList, RootTabScreenProps} from '../types';
+import {HomeParamList, RootStackParamList, RootTabParamList, RootTabScreenProps} from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
+import DetailScreen from "../screens/DetailScreen";
 
 export default function Navigation({colorScheme}: { colorScheme: ColorSchemeName }) {
     return (
@@ -64,9 +65,11 @@ function BottomTabNavigator() {
             }}>
             <BottomTab.Screen
                 name="Home"
-                component={TabOneScreen}
+                component={TabOneNavigator}
                 options={{
-                    tabBarIcon: ({color}) => <AntDesign name={"home"} size={24}/>
+                    headerShown: false,
+                    tabBarIcon: ({color}) => <AntDesign name={"home"} size={24} color={color}
+                    />
                 }}
             />
             <BottomTab.Screen
@@ -74,7 +77,7 @@ function BottomTabNavigator() {
                 component={TabTwoScreen}
                 options={{
                     // title: 'Coming Soon',
-                    tabBarIcon: ({color}) => <MaterialIcons name='video-library' size={24}/>,
+                    tabBarIcon: ({color}) => <MaterialIcons name='video-library' size={24} color={color}/>,
                 }}
             />
             <BottomTab.Screen
@@ -82,7 +85,7 @@ function BottomTabNavigator() {
                 component={TabTwoScreen}
                 options={{
                     // title: 'Search',
-                    tabBarIcon: ({color}) => <Ionicons name='search' size={24}/>,
+                    tabBarIcon: ({color}) => <Ionicons name='search' size={24} color={color}/>,
                 }}
             />
             <BottomTab.Screen
@@ -90,7 +93,7 @@ function BottomTabNavigator() {
                 component={TabTwoScreen}
                 options={{
                     // title: 'Coming Soon',
-                    tabBarIcon: ({color}) => <AntDesign name='download' size={24}/>,
+                    tabBarIcon: ({color}) => <AntDesign name='download' size={24} color={color}/>,
                 }}
             />
         </BottomTab.Navigator>
@@ -98,4 +101,21 @@ function BottomTabNavigator() {
 }
 
 
+const HomeStack = createNativeStackNavigator<HomeParamList>()
+
+
+function TabOneNavigator() {
+    return (
+        <HomeStack.Navigator>
+            <HomeStack.Screen name="DetailScreen"
+                              component={DetailScreen}
+                              options={{title: ''}}
+            />
+             <HomeStack.Screen name="HomeScreen"
+                              component={HomeScreen}
+                              options={{headerShown: false}}
+            />
+        </HomeStack.Navigator>
+    )
+}
 
