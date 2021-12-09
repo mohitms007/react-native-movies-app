@@ -1,9 +1,10 @@
 import { AntDesign, Entypo, Feather, Ionicons, MaterialIcons } from "@expo/vector-icons"
 import { Picker } from "@react-native-picker/picker"
-import React, { useState } from "react"
-import { Text, View, Image, Pressable, FlatList } from "react-native"
+import React, { useState, useCallback } from "react"
+import { Text, View, Image, Pressable, FlatList, Alert, Button } from "react-native"
 import EpisodeItem from "../../components/EpisodeItem"
 import styles from "./styles"
+import YoutubePlayer from "react-native-youtube-iframe";
 
 const movie = {
   "backdrop_path": "/pkOSjcllDSs4WP9i8DGkw9VgF5Q.jpg",
@@ -28,13 +29,23 @@ const movie = {
 
 
 
-
 export default function DetailScreen() {
 
   const [selectedSeason, setSelectedSeason] = useState('s1')
+  const [playing, setPlaying] = useState(false)
+
+  const onStateChange = useCallback((state) => {
+    if (state === "ended") {
+      setPlaying(false);
+    }
+  },
+    []);
+
   return (
     <View>
-      <Image style={styles.image} source={{ uri: 'http://image.tmdb.org/t/p/w500' + movie.poster_path }} />
+      {playing ? <YoutubePlayer
+        height={250} play={playing} videoId={"iee2TATGMyI"} onChangeState={onStateChange} /> : <Image style={styles.image} source={{ uri: 'http://image.tmdb.org/t/p/w500' + movie.poster_path }} />}
+      {/* <Button title={playing ? "pause" : "play"} onPress={togglePlaying} /> */}
       <FlatList
         data={movies}
         style={{ marginBottom: 250 }}
@@ -59,8 +70,8 @@ export default function DetailScreen() {
 
 
             {/* Play Button */}
-            <Pressable onPress={() => { console.warn('Plage 1') }} style={styles.play}>
-              <Text style={styles.play_text}> <Entypo name="controller-play" size={16} color="black" /> Play </Text>
+            <Pressable onPress={() => { setPlaying(!playing) }} style={styles.play}>
+              <Text style={styles.play_text}> <Entypo name="controller-play" size={16} color="black" /> {playing ? "Pause" : "Play"}</Text>
             </Pressable>
 
 
@@ -92,9 +103,9 @@ export default function DetailScreen() {
               onValueChange={(itemValue, itemIndex) => { setSelectedSeason(itemValue) }}
               style={styles.pickerStyle}
             >
-              {seasons.map((item) => { 
-                const {label, value} = item
-                return  <Picker.Item key={value} label={label} value={value} />
+              {seasons.map((item) => {
+                const { label, value } = item
+                return <Picker.Item key={value} label={label} value={value} />
               })}
             </Picker>
           </View>
@@ -114,7 +125,7 @@ const movies = [
   {
     id: 1,
     title: 'The upbringingh',
-    poster: 'https://m.media-amazon.com/images/M/MV5BNmVmMmM5ZmItZDg0OC00NTFiLWIxNzctZjNmYTY5OTU3ZWU3XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_.jpg',
+    poster: 'https://static-koimoi.akamaized.net/wp-content/new-galleries/2019/12/kgf-chapter-2-first-look-out-yash-takes-the-story-forward-on-his-shoulders-literally-001.jpg',
     duration: '25:00',
     plot: 'This is a great episode where murder is held and everybody dies.asnfjkdnafkjdnjfndkfjdanjfkadsnkjfndsakjnc dsnfjdsanfjkdasnkfnsdak n naskjfnjkasdnf jknf a',
     video: 'string'
@@ -122,25 +133,9 @@ const movies = [
   {
     id: 2,
     title: 'The dangerous',
-    poster: 'https://lh3.googleusercontent.com/proxy/gft5ACBD9PcEYPzQU2Bw7WCNkQbqyc3qQH3xKwTnoBQDAbnLgdbnU7e9RQ40onaMQCYUKRUjJ5L4dqWiawIrpjHSQkpKN4Rrh1SLXDQESHsDDiOs4ADrQNPyRZt5ECt448ot7AfBOcRV--SZncsz6cFZcpG6n4xF7GAiKFYkhs0AsVMAedP880IueoRrRBEii9BcnEAlfpEnKh6oZc71bK8aBZUhqEKhsqyFLM1NdKW6fgPLIxeGc10',
+    poster: 'http://image.tmdb.org/t/p/w500' + movie.poster_path,
     duration: '25:00',
     plot: 'This is a great episode where murder is held and everybody dies.',
     video: 'string'
   },
-  {
-    id: 3,
-    title: 'The third',
-    poster: 'https://lh3.googleusercontent.com/proxy/gft5ACBD9PcEYPzQU2Bw7WCNkQbqyc3qQH3xKwTnoBQDAbnLgdbnU7e9RQ40onaMQCYUKRUjJ5L4dqWiawIrpjHSQkpKN4Rrh1SLXDQESHsDDiOs4ADrQNPyRZt5ECt448ot7AfBOcRV--SZncsz6cFZcpG6n4xF7GAiKFYkhs0AsVMAedP880IueoRrRBEii9BcnEAlfpEnKh6oZc71bK8aBZUhqEKhsqyFLM1NdKW6fgPLIxeGc10',
-    duration: '25:00',
-    plot: 'This is a great episode where murder is held and everybody dies.',
-    video: 'string'
-  },
-  {
-    id: 4,
-    title: 'The fourth',
-    poster: 'https://lh3.googleusercontent.com/proxy/gft5ACBD9PcEYPzQU2Bw7WCNkQbqyc3qQH3xKwTnoBQDAbnLgdbnU7e9RQ40onaMQCYUKRUjJ5L4dqWiawIrpjHSQkpKN4Rrh1SLXDQESHsDDiOs4ADrQNPyRZt5ECt448ot7AfBOcRV--SZncsz6cFZcpG6n4xF7GAiKFYkhs0AsVMAedP880IueoRrRBEii9BcnEAlfpEnKh6oZc71bK8aBZUhqEKhsqyFLM1NdKW6fgPLIxeGc10',
-    duration: '25:00',
-    plot: 'This is a great episode where murder is held and everybody dies.',
-    video: 'string'
-  }
 ]

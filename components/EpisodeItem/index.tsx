@@ -7,7 +7,7 @@ import styles from './styles'
 const episode = {
   id: 1,
   title: 'The upbringing',
-  poster: 'https://lh3.googleusercontent.com/proxy/gft5ACBD9PcEYPzQU2Bw7WCNkQbqyc3qQH3xKwTnoBQDAbnLgdbnU7e9RQ40onaMQCYUKRUjJ5L4dqWiawIrpjHSQkpKN4Rrh1SLXDQESHsDDiOs4ADrQNPyRZt5ECt448ot7AfBOcRV--SZncsz6cFZcpG6n4xF7GAiKFYkhs0AsVMAedP880IueoRrRBEii9BcnEAlfpEnKh6oZc71bK8aBZUhqEKhsqyFLM1NdKW6fgPLIxeGc10',
+  poster: 'https://static-koimoi.akamaized.net/wp-content/new-galleries/2019/12/kgf-chapter-2-first-look-out-yash-takes-the-story-forward-on-his-shoulders-literally-001.jpg',
   duration: '25:00',
   plot: 'This is a great episode where murder is held and everybody dies.',
   video: 'string'

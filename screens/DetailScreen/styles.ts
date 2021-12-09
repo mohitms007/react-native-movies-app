@@ -114,11 +114,7 @@ const styles = StyleSheet.create({
     color: 'white',
     width: 200,
     marginLeft: 15,
-    backgroundColor: 'black' 
   }
-
-
-
 
 })
 
