@@ -15,7 +15,7 @@ import useColorScheme from '../hooks/useColorScheme';
 import ModalScreen from '../screens/ModalScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import HomeScreen from '../screens/HomeScreen/HomeScreen';
-import TabTwoScreen from '../screens/TabTwoScreen';
+import SearchScreen from '../screens/SearchScreen';
 import {HomeParamList, RootStackParamList, RootTabParamList, RootTabScreenProps} from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 import DetailScreen from "../screens/DetailScreen";
@@ -74,7 +74,7 @@ function BottomTabNavigator() {
             />
             <BottomTab.Screen
                 name="Coming_Soon"
-                component={TabTwoScreen}
+                component={SearchScreen}
                 options={{
                     // title: 'Coming Soon',
                     tabBarIcon: ({color}) => <MaterialIcons name='video-library' size={24} color={color}/>,
@@ -82,15 +82,16 @@ function BottomTabNavigator() {
             />
             <BottomTab.Screen
                 name="Search"
-                component={TabTwoScreen}
+                component={SearchScreen}
                 options={{
                     // title: 'Search',
+                    headerShown: false,
                     tabBarIcon: ({color}) => <Ionicons name='search' size={24} color={color}/>,
                 }}
             />
             <BottomTab.Screen
                 name="Downloads"
-                component={TabTwoScreen}
+                component={SearchScreen}
                 options={{
                     // title: 'Coming Soon',
                     tabBarIcon: ({color}) => <AntDesign name='download' size={24} color={color}/>,
@@ -107,14 +108,15 @@ const HomeStack = createNativeStackNavigator<HomeParamList>()
 function TabOneNavigator() {
     return (
         <HomeStack.Navigator>
+                  <HomeStack.Screen name="HomeScreen"
+                              component={HomeScreen}
+                              options={{headerShown: false}}
+            />
             <HomeStack.Screen name="DetailScreen"
                               component={DetailScreen}
                               options={{title: ''}}
             />
-             <HomeStack.Screen name="HomeScreen"
-                              component={HomeScreen}
-                              options={{headerShown: false}}
-            />
+       
         </HomeStack.Navigator>
     )
 }

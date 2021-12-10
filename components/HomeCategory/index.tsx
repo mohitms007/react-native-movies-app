@@ -1,7 +1,7 @@
+import { useNavigation } from '@react-navigation/core';
 import * as React from 'react';
-import { FlatList, Image } from 'react-native';
-import { Text, View } from '../../components/Themed';
-import DetailScreen from '../../screens/DetailScreen';
+import { FlatList, Image, TouchableOpacity  } from 'react-native';
+import { Text, View} from '../../components/Themed';
 import styles from './styles';
 
 
@@ -15,6 +15,8 @@ interface HomeCategoryProps {
 const HomeCategory = (props: HomeCategoryProps) => {
 
   const [movieList, setMovieList] = React.useState([])
+  const [selectedMovie, setSelectedMovie] = React.useState({})
+  const navigation = useNavigation();
   const {title, category, keyword_id, type} = props
   React.useEffect(() => {
     getPopularMovies()
@@ -36,9 +38,15 @@ const HomeCategory = (props: HomeCategoryProps) => {
         APP_URL = TOP_RATED_URL
         break;      
     }
-
+    
     fetch(APP_URL).then(response => response.json())
       .then(data => setMovieList(data.results));
+
+  }
+
+  const goToDetailsScreen = (movie: any) => {
+// @ts-ignore
+    navigation.navigate('DetailScreen',{movieDetails: movie, type})
 
   }
 
@@ -50,9 +58,9 @@ const HomeCategory = (props: HomeCategoryProps) => {
           data={movieList}
           horizontal
           renderItem={({ item }: any) => (
-            <View>
+            <TouchableOpacity key={item.id} onPress={() => goToDetailsScreen(item)}>
               {item.poster_path ? (<Image style={styles.image} source={{ uri: 'http://image.tmdb.org/t/p/w500' + item.poster_path }} />) : null}
-            </View>
+            </TouchableOpacity>
           )} />
       )}
     </>
