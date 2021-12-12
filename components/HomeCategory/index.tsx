@@ -27,7 +27,7 @@ const HomeCategory = (props: HomeCategoryProps) => {
     const BASE_URL = "https://api.themoviedb.org/3"
     const DISCOVER_URL = BASE_URL + `/discover/${type}?sort_by=popularity_desc&with_keywords=${keyword_id}&api_key=` + API_KEY
     const POPULAR_URL = BASE_URL + `/${type}/popular?sort_by=popularity_desc&api_key=` + API_KEY
-    const TOP_RATED_URL = BASE_URL + `/${type}/top_rated?sort_by=popularity_desc&api_key=` + API_KEY
+    const TOP_RATED_URL = BASE_URL + `/${type}/top_rated?api_key=` + API_KEY
     let APP_URL = DISCOVER_URL
 
     switch(category) {

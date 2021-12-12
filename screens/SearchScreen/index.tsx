@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { FlatList, Image, Pressable, TextInput, TouchableOpacity } from 'react-native';
 import { Text, View } from '../../components/Themed';
+import { useNavigation } from '@react-navigation/core';
 import styles from './styles';
 
 export default function TabTwoScreen() {
@@ -9,6 +10,7 @@ export default function TabTwoScreen() {
   const [contentType, setContentType] = React.useState("movie")
   const [searchResults, setSearchResult] = React.useState([])
   const [loading, setLoading] = React.useState(false)
+  const navigation = useNavigation()
 
   const onSelect = (type: any) => {
     setContentType(type)
@@ -30,6 +32,15 @@ export default function TabTwoScreen() {
     setLoading(false)
     setSearchItem("")
   }
+
+
+  const onPressingResult = (item: any) => {
+    // @ts-ignore
+    navigation.navigate('DetailScreen', {movieDetails: item, contentType})
+  }
+
+
+
   return (
     <View style={styles.container}>
       <TextInput
@@ -68,7 +79,9 @@ export default function TabTwoScreen() {
                 flex: 1 / 3,
                 flexDirection: 'column',
                 margin: 1
-              }} >
+              }}
+              onPress={() => onPressingResult(item)}
+              >
                 {item.poster_path ? (<Image style={styles.image} source={{ uri: 'http://image.tmdb.org/t/p/w500' + item.poster_path }} />) : null}
               </TouchableOpacity>
             )} />

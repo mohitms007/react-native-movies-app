@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { FlatList, Image, ScrollView } from 'react-native';
+import { FlatList } from 'react-native';
 import HomeCategory from '../../components/HomeCategory';
 import { Text, View } from '../../components/Themed';
 import styles from "./style";
