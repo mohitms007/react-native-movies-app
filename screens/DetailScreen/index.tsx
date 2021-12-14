@@ -25,9 +25,8 @@ export default function DetailScreen() {
   const typeOfContent = route.params.type
   const BASE_URL = "https://api.themoviedb.org/3"
   const API_KEY = "2d2a7a9eecb1625b6c46e99b817621a4"
-  const TV_DETAIL = BASE_URL + `/tv/${id}?append_to_response=videos,credits,similar,recommendations&api_key=` + API_KEY
-  const MOVIE_DETAIL = BASE_URL + `/movie/${id}?append_to_response=videos,seasons,credits,similar,recommendations&api_key=` + API_KEY
-
+  const TV_DETAIL = BASE_URL + `/tv/${id}?append_to_response=videos,credits,seasons,similar,recommendations&api_key=` + API_KEY
+  const MOVIE_DETAIL = BASE_URL + `/movie/${id}?append_to_response=videos,credits,similar,recommendations&api_key=` + API_KEY
 
 
   useEffect(() => {
@@ -44,8 +43,10 @@ export default function DetailScreen() {
     const json = string === "" ? {} : JSON.parse(string);
     setMediaDetails(json)
     setCast(json.credits.cast)
-    setSeasons(json.seasons)
-    setCurrentSeason(json.seasons[0])
+    tv && setSeasons(json.seasons)
+    tv && json.seasons.length == 1 && setCurrentSeason(json.seasons[0])
+    tv && json.seasons.length > 1 && setCurrentSeason(json.seasons[1])
+    tv && json.seasons[0].name!=="Specials" && setCurrentSeason(json.seasons[0])
   }
 
 
@@ -64,16 +65,14 @@ export default function DetailScreen() {
     []);
 
 
-  const changeSeason = (selectedSeasonIndex:any) => {
-  console.log(seasons[selectedSeasonIndex])
+  const changeSeason = (selectedSeasonIndex: any) => {
     setCurrentSeason(seasons[selectedSeasonIndex])
   }
 
 
-
   return (
     <ScrollView>
-      <View style={{paddingBottom: 25}}>
+      <View style={{ paddingBottom: 25 }}>
 
         {playing && <YoutubePlayer
           height={250} play={playing} videoId={videos.results[0].key} onChangeState={onStateChange} />}
@@ -155,22 +154,27 @@ export default function DetailScreen() {
             <Text style={styles.shareText}> Share </Text>
           </View>
         </View>
+      </View>
 
-        {typeOfContent === 'tv' && <Picker
-          selectedValue={currentSeason}
+      <View>
+      {typeOfContent === 'tv' && <Picker
+      //@ts-ignore
+          selectedValue={currentSeason.season_number}
           dropdownIconColor="white"
-          onValueChange={(itemValue,itemPosition) => { changeSeason(itemPosition) }}
+          onValueChange={(itemValue, itemPosition) => { changeSeason(itemPosition) }}
           style={styles.pickerStyle}
         >
           {seasons.map((item) => {
             const { name, season_number } = item
-            
+            //@ts-ignore
             return <Picker.Item key={season_number} label={name} value={item.season_number} />
           })}
+        
         </Picker>}
+         {/* @ts-ignore */}
+           {typeOfContent === 'tv' && currentSeason.season_number !== undefined ? <SeasonItem seasonDetails={currentSeason} poster={poster_path} tvId={id} /> : <Text> No Episodes added yet. </Text> }
       </View>
-      <SeasonItem seasonDetails={currentSeason} />    
+
     </ScrollView>
   )
-
 }
